@@ -54,7 +54,7 @@ public class Main extends JFrame {
         mPanel.add(searchMovie,BorderLayout.NORTH);
 
         //영화 리스트
-        
+        //githubtesttest
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
