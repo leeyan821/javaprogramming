@@ -16,7 +16,6 @@ public class AdminService {
         return service;
     }
 
-    public AdminService(AdminDAO dao){this.dao = dao;}
     public Admin logIn(LogIn request) {
         Admin admin = dao.idPwd(request.getId(), request.getPwd());
         return admin;

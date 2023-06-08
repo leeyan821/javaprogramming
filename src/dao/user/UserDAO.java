@@ -1,9 +1,8 @@
 package dao.user;
 
-public class UserDAO implements UserDAOIn {
-    private static UserDAO instance;
-    public static UserDAO getInstance() {
-        if(instance==null) instance = new UserDAO();
-        return instance;
-    }
+import dao.DAO;
+import domain.User;
+
+public interface UserDAO extends DAO{
+    public User uIdPwd(String id, String pwd);
 }

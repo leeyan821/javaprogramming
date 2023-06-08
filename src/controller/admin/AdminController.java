@@ -11,7 +11,6 @@ public class AdminController {
     public AdminController(){
         adminService = AdminService.getInstance();
     }
-    public AdminController(AdminService adminService) { this.adminService = adminService; }
 
     public int logIn(String id, String pwd){
         LogIn lo = new LogIn();

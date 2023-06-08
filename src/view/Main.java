@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main extends JFrame {
     private JPanel mPanel;
@@ -9,7 +11,7 @@ public class Main extends JFrame {
     private JMenu movie, buy, myPage;
     private JLabel search;
     private JTextField tSearch;
-    private JButton bthSearch;
+    private JButton btnSearch;
 
     Main(){
         this(null);
@@ -49,15 +51,28 @@ public class Main extends JFrame {
         tSearch.setFont(new Font("AppleSDGothicNeoR", Font.PLAIN, 15));
         searchMovie.add(tSearch);
 
-        bthSearch = new JButton("검색");
-        searchMovie.add(bthSearch);
+        btnSearch = new JButton("검색");
+        searchMovie.add(btnSearch);
         mPanel.add(searchMovie,BorderLayout.NORTH);
 
         //영화 리스트
-        //githubtesttest
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
+        //액션
+        //검색 하는 중
+        btnSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = tSearch.getText();
+                System.out.println(name);
+                new Search(id,name);
+
+            }
+        });
     }
+
 
     public static void main(String[] args) {
         Main m = new Main();

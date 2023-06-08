@@ -1,6 +1,7 @@
 package view;
 
 import controller.admin.AdminController;
+import controller.user.UserController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,8 @@ public class LogIn extends JFrame {
 	private JButton login, register, exit;
 	private JRadioButton tUser, tAdmin;
 	AdminController admin = new AdminController();
+	UserController user = new UserController();
+
 	LogIn(){
 		this.setTitle("Start");
 		this.setResizable(true);
@@ -85,7 +88,6 @@ public class LogIn extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 
-		//로그인 액션 - admin 까지만 user 추가 해야 함
 		login.addActionListener(new ActionListener() {
 
 			@Override
@@ -93,12 +95,9 @@ public class LogIn extends JFrame {
 				String id = tId.getText();
 				String password = tPassword.getText();
 
-				System.out.println(id + password);
-
 				if(!(id.isEmpty()) && !(password.isEmpty())) {
 					if(tAdmin.isSelected()) {
 						int value = admin.logIn(id, password);
-						System.out.println(value);
 						if (value == 0) {
 							JOptionPane.showMessageDialog(null, "로그인 완료");
 							view.Main m = new Main(id);
@@ -107,7 +106,14 @@ public class LogIn extends JFrame {
 							JOptionPane.showMessageDialog(null, "관리자 로그인 실패");
 						}
 					}else{
-						JOptionPane.showMessageDialog(null, "사용자 로그인 실패");
+						int value = user.userLogIn(id, password);
+						if (value == 0) {
+							JOptionPane.showMessageDialog(null, "로그인 완료");
+							view.Main m = new Main(id);
+							dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "사용자 로그인 실패");
+						}
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "ID PWD 입력");

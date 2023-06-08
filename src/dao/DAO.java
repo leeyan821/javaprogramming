@@ -12,7 +12,6 @@ public interface DAO {
         String password = "1004"; // 접속자 pw
 
         con = DriverManager.getConnection("jdbc:mysql://" + server + "?allowPublicRetrieval=true&useSSL=false", user_name, password);
-        System.out.println("연결 완료!");
 
         return con;
     }
