@@ -8,10 +8,11 @@ import java.awt.event.ActionListener;
 public class Main extends JFrame {
     private JPanel mPanel;
     private JMenuBar mb;
-    private JMenu movie, buy, myPage;
+    private JMenu movie;
     private JLabel search;
     private JTextField tSearch;
     private JButton btnSearch;
+    private JMenuItem a,b,c;
 
     Main(){
         this(null);
@@ -31,12 +32,15 @@ public class Main extends JFrame {
         
         //메뉴
         mb = new JMenuBar();
-        movie = new JMenu("영화");
-        buy = new JMenu("예매");
-        myPage = new JMenu("마이페이지");
+        movie = new JMenu("Menu");
+
+        a = new JMenuItem("영화 목록");
+        b = new JMenuItem("예매");
+        c = new JMenuItem("마이페이지");
+        movie.add(a);
+        movie.add(b);
+        movie.add(c);
         mb.add(movie);
-        mb.add(buy);
-        mb.add(myPage);
         this.setJMenuBar(mb);
 
         //검색
@@ -66,6 +70,13 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String name = tSearch.getText();
                 new Search(id,name);
+            }
+        });
+
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MovieBooking();
             }
         });
     }

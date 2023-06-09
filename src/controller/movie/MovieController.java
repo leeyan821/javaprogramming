@@ -2,6 +2,7 @@ package controller.movie;
 
 import service.movie.MovieService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieController {
