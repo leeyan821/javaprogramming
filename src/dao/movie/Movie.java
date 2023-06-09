@@ -12,5 +12,4 @@ public interface Movie extends DAO {
     List<String> getAllDate(String movie, String theater);
 
     List<String> getAllTime(String movie, String theater, String date);
-
 }

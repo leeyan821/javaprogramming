@@ -1,8 +1,8 @@
 package domain;
 
 public class Movie {
-    Integer movieNum;
-    String movieName;
+    private Integer movieNum;
+    private String movieName;
     Integer purchase; //팔린 수
 
     public Movie(Integer movieNum, String movieName, Integer purchase) {

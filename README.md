@@ -19,7 +19,7 @@ CREATE TABLE `movielist` (
   `movieListId` int unsigned NOT NULL AUTO_INCREMENT,
   `movieNum` int unsigned NOT NULL,
   `theater` varchar(45) NOT NULL,
-  `date` date NOT NULL,
+  `date` char(10) NOT NULL,
   `time` time NOT NULL,
   `room` int unsigned NOT NULL,
   PRIMARY KEY (`movieListId`),
@@ -43,4 +43,14 @@ CREATE TABLE `user` (
   `pwd` varchar(15) DEFAULT NULL,
   `name` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `booking` (
+  `bookingNum` int NOT NULL AUTO_INCREMENT,
+  `movieListId` int unsigned NOT NULL,
+  `seat` varchar(3) NOT NULL,
+  `userId` varchar(15) NOT NULL, 
+  PRIMARY KEY (`bookingNum`),
+  foreign key(movieListId) references movieList(movieListId),
+  foreign key(userId) references user(id)
 );
