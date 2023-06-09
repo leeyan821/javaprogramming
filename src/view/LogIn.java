@@ -100,7 +100,7 @@ public class LogIn extends JFrame {
 						int value = admin.logIn(id, password);
 						if (value == 0) {
 							JOptionPane.showMessageDialog(null, "로그인 완료");
-							view.Main m = new Main(id);
+							new AdminMain();
 							dispose();
 						} else {
 							JOptionPane.showMessageDialog(null, "관리자 로그인 실패");
