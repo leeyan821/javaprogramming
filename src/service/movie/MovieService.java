@@ -31,4 +31,16 @@ public class MovieService {
     public List<String> getAllTime(String movie, String theater, String date) {
         return dao.getAllTime(movie, theater, date);
     }
+
+    public void addBooking(int id, List<String> selectedSeat) {
+        dao.addBooking(id, selectedSeat);
+    }
+
+    public int findByMovieListId(String movie, String theater, String date, String time) {
+        return dao.findByMovieListId(movie, theater, date, time);
+    }
+
+    public List<String> getBookingList(int num) {
+        return dao.getBookingList(num);
+    }
 }

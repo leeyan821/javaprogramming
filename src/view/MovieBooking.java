@@ -19,7 +19,7 @@ public class MovieBooking extends JFrame {
     public MovieBooking() {
         this.setTitle("영화예매");
         this.setResizable(true);
-        this.setSize(1000, 600);
+        this.setSize(800, 400);
         this.setLocationRelativeTo(null); //가운데 띄우기
         this.setLayout(new BorderLayout());
 
@@ -73,7 +73,6 @@ public class MovieBooking extends JFrame {
                 if(!e.getValueIsAdjusting()) {
                     selectedDate= dateList.getSelectedValue();
                     timeList.setListData(movieController.getAllTime(selectedMovie, selectedTheater, selectedDate).toArray(new String[0]));
-                    selectedTime = timeList.getSelectedValue();
                 }
             }
         });
@@ -81,7 +80,8 @@ public class MovieBooking extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(selectedMovie != null && selectedTheater != null || selectedDate != null || selectedTime != null) {
+                selectedTime = timeList.getSelectedValue();
+                if(selectedMovie != null && selectedTheater != null && selectedDate != null && selectedTime != null) {
                     new Seat(selectedMovie, selectedTheater, selectedDate, selectedTime);
                     setVisible(false);
                 }

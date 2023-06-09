@@ -12,4 +12,10 @@ public interface Movie extends DAO {
     List<String> getAllDate(String movie, String theater);
 
     List<String> getAllTime(String movie, String theater, String date);
+
+    int findByMovieListId(String movie, String theater, String date, String time);
+
+    void addBooking(int movieListId, List<String> selectedSeat);
+
+    List<String> getBookingList(int num);
 }
