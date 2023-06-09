@@ -1,5 +1,7 @@
 package dao.movie;
 
+import domain.Admin;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,12 +9,16 @@ import java.util.List;
 
 public class MovieImpl implements Movie {
     private static MovieImpl instance;
-    private MovieImpl() {}
+
+    private MovieImpl() {
+    }
+
     private Connection conn = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
-    public static MovieImpl getInstance(){
-        if(instance==null) instance = new MovieImpl();
+
+    public static MovieImpl getInstance() {
+        if (instance == null) instance = new MovieImpl();
         return instance;
     }
 
@@ -31,8 +37,8 @@ public class MovieImpl implements Movie {
             System.out.println("");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(rs,stmt,conn);
+        } finally {
+            close(rs, stmt, conn);
         }
         return re;
     }
@@ -54,8 +60,8 @@ public class MovieImpl implements Movie {
             System.out.println("");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(rs,stmt,conn);
+        } finally {
+            close(rs, stmt, conn);
         }
         return re;
     }
@@ -78,8 +84,8 @@ public class MovieImpl implements Movie {
             System.out.println("");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(rs,stmt,conn);
+        } finally {
+            close(rs, stmt, conn);
         }
         return re;
     }
@@ -109,9 +115,37 @@ public class MovieImpl implements Movie {
             System.out.println("");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        } finally {
+            close(rs, stmt, conn);
+        }
+        return re;
+    }
+
+
+    //추가
+    //검색
+    /*@Override
+    public List<domain.Movie> searchMovieList(String movieName) {
+        List<domain.Movie> re = new ArrayList<>();
+        domain.Movie movie = null;
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select * from movie where movieName like ?");
+            stmt.setString(1, '%'+movieName+'%');
+
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                movie = new domain.Movie(rs.getInt("movieNum"),rs.getString("movieName"),rs.getInt("purchase"));
+                re.add(movie);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Search Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }finally {
             close(rs,stmt,conn);
         }
         return re;
-    }
+    }*/
 }

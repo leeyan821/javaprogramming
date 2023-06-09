@@ -61,14 +61,11 @@ public class Main extends JFrame {
         setVisible(true);
 
         //액션
-        //검색 하는 중
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = tSearch.getText();
-                System.out.println(name);
                 new Search(id,name);
-
             }
         });
     }

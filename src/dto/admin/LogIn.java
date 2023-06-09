@@ -1,4 +1,4 @@
-package dto.admin.resquest;
+package dto.admin;
 
 public class LogIn {
     private String id;

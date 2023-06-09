@@ -3,7 +3,7 @@ package service.admin;
 import dao.admin.AdminDAO;
 import dao.admin.AdminDAOImpl;
 import domain.Admin;
-import dto.admin.resquest.LogIn;
+import dto.admin.LogIn;
 
 public class AdminService {
     private AdminDAO dao;
