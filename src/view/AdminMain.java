@@ -54,6 +54,12 @@ public class AdminMain extends JFrame {
                 new AdminMovie();
             }
         });
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AdminUser();
+            }
+        });
     }
     public static void main(String[] args) {
         new AdminMain();

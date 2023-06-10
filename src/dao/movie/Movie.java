@@ -35,4 +35,6 @@ public interface Movie extends DAO {
     UserBookingInfo getUserBookingInfo(Object num);
 
     void deleteBooking(Object num);
+
+    void deleteMovie(String name);
 }

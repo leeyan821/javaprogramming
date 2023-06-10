@@ -80,4 +80,41 @@ public class UserDAOImpl implements UserDAO {
         }
         return re;
     }
+
+    @Override
+    public List<User> getAll() {
+        List<User> list = new ArrayList<>();
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select * from user");
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                list.add(new User(rs.getString("id"),rs.getString("pwd"),rs.getString("name")));
+            }
+        } catch (SQLException e) {
+            System.out.println("User Get All Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return list;
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("delete from user where id = ?");
+            stmt.setString(1, id);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Delete Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+    }
 }

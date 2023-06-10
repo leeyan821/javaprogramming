@@ -76,4 +76,6 @@ public class MovieService {
     public List<domain.Movie> getAll(){
         return dao.getAll();
     }
+
+    public void deleteMovie(String name) {dao.deleteMovie(name);}
 }

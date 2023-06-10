@@ -4,6 +4,9 @@ import domain.User;
 import dto.user.GetIdPwd;
 import service.user.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserController {
     private UserService userService;
     public UserController() {userService = UserService.getInstance();}
@@ -31,5 +34,18 @@ public class UserController {
     }
     public void addUser(String id, String pwd, String name){
         userService.addUser(id,pwd,name);
+    }
+
+    public List<dto.user.User> getAll() {
+        List<User> list = userService.getAll();
+        List<dto.user.User> re = new ArrayList<>();
+        for (User a:list) {
+            re.add(new dto.user.User(a.getId(),a.getPwd(),a.getName()));
+        }
+        return re;
+    }
+
+    public void deleteUser(String id) {
+        userService.deleteUser(id);
     }
 }

@@ -27,4 +27,11 @@ public class UserService {
         dao.addUser(id,pwd,name);
     }
 
+    public List<User> getAll() {
+        return dao.getAll();
+    }
+
+    public void deleteUser(String id) {
+        dao.deleteUser(id);
+    }
 }

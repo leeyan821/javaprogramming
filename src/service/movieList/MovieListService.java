@@ -4,6 +4,7 @@ import dao.movieList.MovieList;
 import dao.movieList.MovieListImpl;
 
 import java.util.List;
+import java.util.Map;
 
 public class MovieListService {
     private MovieList dao;
@@ -37,4 +38,5 @@ public class MovieListService {
     public void update(Integer num, String theater, String date, String time, Integer room) {
         dao.update(num, theater,date,time,room);
     }
+    public Map<String,Integer> top(){ return dao.top();}
 }

@@ -1,6 +1,7 @@
 package view;
 
 import controller.movie.MovieController;
+import controller.movieList.MovieListController;
 import dto.movie.MoviList;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class Main extends JFrame {
     private JButton btnSearch;
     private JMenuItem a,b,c;
     MovieController movieController = new MovieController();
+    MovieListController movieListController = new MovieListController();
 
     Main(){
         this(null);
@@ -66,20 +68,25 @@ public class Main extends JFrame {
         mPanel.add(searchMovie,BorderLayout.NORTH);
 
         //영화 리스트
-        String header[] = {"Title","Count"};
+        String header[] = {"Title"};
         List<MoviList> result = new ArrayList<>();
         result = movieController.getAll();
+        List<String> re2 = movieListController.top();
         String contents[][] = new String[result.size()][2];
+        //String contents[][] = new String[re2.size()][1];
 
         for(int i=0;i< result.size();i++){
             int j=0;
-            contents[i][j++] = result.get(i).getMovieName();
-            contents[i][j] = String.valueOf(result.get(i).getPurchase());
+            contents[i][j] = result.get(i).getMovieName();
         }
+        /*for(int i=0;i< re2.size();i++){
+            int j=0;
+            contents[i][j] = re2.get(i);
+        }*/
 
         JTable table = new JTable(contents,header);
         JScrollPane scrolledTable = new JScrollPane(table);
-        scrolledTable.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        scrolledTable.setBorder(BorderFactory.createEmptyBorder(10,50,10,50));
         table.getColumn("Title").setPreferredWidth(300);
 
         mPanel.add(scrolledTable,BorderLayout.CENTER);

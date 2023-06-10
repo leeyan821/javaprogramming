@@ -160,7 +160,7 @@ public class MovieImpl implements Movie {
             rs.next();
             bookingNum = rs.getInt(1);
         } catch (SQLException e) {
-            System.out.println("");
+            System.out.println("addBooking"+e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {
@@ -181,7 +181,7 @@ public class MovieImpl implements Movie {
                 stmt.executeUpdate();
             }
         } catch (SQLException e) {
-            System.out.println("");
+            System.out.println("addBookingSeat"+e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {
@@ -202,7 +202,7 @@ public class MovieImpl implements Movie {
                 re.add(rs.getString("seat"));
             }
         } catch (SQLException e) {
-            System.out.println("");
+            System.out.println("getBookingList");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
@@ -233,7 +233,7 @@ public class MovieImpl implements Movie {
             );
             return m;
         } catch (SQLException e) {
-            System.out.println("");
+            System.out.println("getMovieInfo");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {
@@ -260,7 +260,7 @@ public class MovieImpl implements Movie {
             }
             return re;
         } catch (SQLException e) {
-            System.out.println("");
+            System.out.println("getUserBookingList");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
@@ -289,7 +289,7 @@ public class MovieImpl implements Movie {
             );
             return u;
         } catch (SQLException e) {
-            System.out.println("");
+            System.out.println("getUserBookingInfo");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {
@@ -306,15 +306,14 @@ public class MovieImpl implements Movie {
             stmt.setObject(1, num);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("");
+            System.out.println("deleteBooking");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {
             close(rs,stmt,conn);
         }
     }
-
-    //추가
+    
     //영화 추가
     @Override
     public void addMovie(String name) {
@@ -332,14 +331,14 @@ public class MovieImpl implements Movie {
         }
     }
 
-    //전체 내림차순 받아오기
+    //전체 받아오기
     @Override
     public List<domain.Movie> getAll() {
         List<domain.Movie> list = new ArrayList<>();
         domain.Movie m = null;
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("select * from movie order by purchase desc");
+            stmt = conn.prepareStatement("select * from movie");
 
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -355,6 +354,24 @@ public class MovieImpl implements Movie {
             close(rs,stmt,conn);
         }
         return list;
+    }
+
+    //영화 삭제
+    @Override
+    public void deleteMovie(String name) {
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("delete from movie where movieName = ?");
+            stmt.setString(1, name);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Delete Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
     }
 
 }

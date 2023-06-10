@@ -41,7 +41,6 @@ public class MovieController {
         return movieService.getBookingList(num);
     }
 
-    //추가
     //검색
     public List<String> search(String name){
         List<String> re = new ArrayList<>();
@@ -84,5 +83,9 @@ public class MovieController {
 
     public void deleteBooking(Object num) {
         movieService.deleteBooking(num);
+    }
+
+    public void deleteMovie(String name) {
+        movieService.deleteMovie(name);
     }
 }

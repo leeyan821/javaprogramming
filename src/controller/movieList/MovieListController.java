@@ -4,8 +4,7 @@ import domain.MovieList;
 import dto.movie.MovieChange;
 import service.movieList.MovieListService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MovieListController {
     private MovieListService movieListService;
@@ -48,5 +47,22 @@ public class MovieListController {
 
     public void update(Integer num, String theater, String date, String time, Integer room) {
         movieListService.update(num, theater,date,time,room);
+    }
+    public List<String> top(){
+        Map<String,Integer> map = movieListService.top();
+        List<String> keySet = new ArrayList<>(map.keySet());
+        keySet.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return map.get(o1).compareTo(map.get(o2));
+            }
+        });
+        return keySet;
+    }
+    public Integer deleteMovie(String name){
+         if(movieListService.findMovieByName(name).isEmpty()){
+             return 0;
+         }
+         return 1;
     }
 }

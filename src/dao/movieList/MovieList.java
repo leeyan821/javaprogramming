@@ -3,6 +3,7 @@ package dao.movieList;
 import dao.DAO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MovieList extends DAO {
     List<String> getAllTheater();
@@ -15,4 +16,5 @@ public interface MovieList extends DAO {
     void delete(Integer num);
 
     void update(Integer num, String theater, String date, String time, Integer room);
+    Map<String,Integer> top();
 }

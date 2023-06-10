@@ -120,7 +120,7 @@ public class Seat extends JFrame implements ActionListener {
         add(t, BorderLayout.NORTH);
         add(f, BorderLayout.SOUTH);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 

@@ -4,7 +4,9 @@ import java.awt.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MovieListImpl implements MovieList{
     private static MovieListImpl instance;
@@ -182,5 +184,25 @@ public class MovieListImpl implements MovieList{
         }finally {
             close(rs,stmt,conn);
         }
+    }
+
+    public Map<String,Integer> top(){
+        Map<String,Integer> map = new HashMap<>();
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select count(movieNum), movieNum from movielist group by movieNum");
+            rs = stmt.executeQuery();
+
+            while(rs.next()){
+                map.put(rs.getString(1),rs.getInt("movieNum"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Top Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return map;
     }
 }

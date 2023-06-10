@@ -101,7 +101,6 @@ public class MovieBooking extends JFrame {
         add(l, BorderLayout.NORTH);
         add(f, BorderLayout.SOUTH); //버튼
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 }
