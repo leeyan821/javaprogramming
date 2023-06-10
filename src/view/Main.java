@@ -79,6 +79,13 @@ public class Main extends JFrame {
                 new MovieBooking(id);
             }
         });
+
+        c.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new UserMovieBookingList(id);
+            }
+        });
     }
 
 

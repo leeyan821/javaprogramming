@@ -1,7 +1,8 @@
 package dao.movie;
 
-import domain.MovieList;
 import dto.movie.MovieInfo;
+import dto.user.UserBookingInfo;
+import dto.user.UserBookingList;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -45,7 +46,7 @@ public class MovieImpl implements Movie {
         List<String> re = new ArrayList<>();
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("SELECT movielist.theater FROM movie, movielist where movie.movieName = ? and movie.movieNum = movielist.movieNum;");
+            stmt = conn.prepareStatement("SELECT DISTINCT movielist.theater FROM movie, movielist where movie.movieName = ? and movie.movieNum = movielist.movieNum;");
             stmt.setString(1, title);
 
             rs = stmt.executeQuery();
@@ -68,7 +69,7 @@ public class MovieImpl implements Movie {
         List<String> re = new ArrayList<>();
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("SELECT date FROM movie, movielist where movie.movieName = ? and theater = ? and movie.movieNum = movielist.movieNum;");
+            stmt = conn.prepareStatement("SELECT DISTINCT date FROM movie, movielist where movie.movieName = ? and theater = ? and movie.movieNum = movielist.movieNum;");
             stmt.setString(1, movie);
             stmt.setString(2, theater);
 
@@ -144,15 +145,38 @@ public class MovieImpl implements Movie {
     }
 
     @Override
-    public void addBooking(String userId, int movieListId, List<String> selectedSeat) {
+    public int addBooking(String userId, int movieListId) {
+        int bookingNum = 0;
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("insert into booking(userId, movieListId, seat) values (?, ?, ?);");
+            stmt = conn.prepareStatement("insert into booking(userId, movieListId) values (?, ?);", Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1, userId);
+            stmt.setInt(2, movieListId);
+            stmt.executeUpdate();
+
+            rs = stmt.getGeneratedKeys();
+            rs.next();
+            bookingNum = rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return bookingNum;
+    }
+
+    @Override
+    public void addBookingSeat(int bookingNum, List<String> selectedSeat) {
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("insert into bookingSeat(bookingNum, seat) values (?, ?);");
 
             for (int i = 0; i < selectedSeat.size(); i++) {
-                stmt.setString(1, userId);
-                stmt.setInt(2, movieListId);
-                stmt.setString(3, selectedSeat.get(i));
+                stmt.setInt(1, bookingNum);
+                stmt.setString(2, selectedSeat.get(i));
                 stmt.executeUpdate();
             }
         } catch (SQLException e) {
@@ -169,14 +193,13 @@ public class MovieImpl implements Movie {
         List<String> re = new ArrayList<>();
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("SELECT seat FROM booking where movieListId = ?;");
+            stmt = conn.prepareStatement("select seat from booking, bookingSeat where booking.bookingNum = bookingSeat.bookingNum and movieListId = ?;");
             stmt.setInt(1, num);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
                 re.add(rs.getString("seat"));
             }
-
         } catch (SQLException e) {
             System.out.println("");
         } catch (ClassNotFoundException e) {
@@ -219,21 +242,22 @@ public class MovieImpl implements Movie {
     }
 
     @Override
-    public String[][] getUserBookingList(String userId) {
-        String[][] re = null;
+    public List<UserBookingList> getUserBookingList(String userId) {
+        List<UserBookingList> re = new ArrayList<>();
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("SELECT * FROM booking where userId = ?;");
+            stmt = conn.prepareStatement("select DISTINCT bookingNum, bookingDate, movieName from movie, booking, movielist where movie.movieNum = movielist.movieNum and userId = ?;");
             stmt.setString(1, userId);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                for (int i = 0; ; i++) {
-                    re[rs.getRow()][i] = rs.getString(i);
-                }
-
+                UserBookingList list = new UserBookingList();
+                list.setBookingNum(rs.getInt(1));
+                list.setBookingDate(rs.getString(2));
+                list.setMovieName(rs.getString(3));
+                re.add(list);
             }
-
+            return re;
         } catch (SQLException e) {
             System.out.println("");
         } catch (ClassNotFoundException e) {
@@ -241,9 +265,53 @@ public class MovieImpl implements Movie {
         } finally {
             close(rs, stmt, conn);
         }
-        return re;
+        return null;
     }
 
+    @Override
+    public UserBookingInfo getUserBookingInfo(Object num) {
+        UserBookingInfo u;
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("SELECT theater, date, time, room FROM movielist, movie, booking where bookingNum = ? " +
+                    "and movie.movieNum = movielist.movieNum and booking.movieListId = movielist.movieListId;");
+            stmt.setObject(1, num);
+
+            rs = stmt.executeQuery();
+            rs.next();
+            u = new UserBookingInfo(
+                    rs.getString("theater"),
+                    rs.getString("date"),
+                    timeFormat.format(rs.getTime("time")),
+                    rs.getInt("room")
+            );
+            return u;
+        } catch (SQLException e) {
+            System.out.println("");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteBooking(Object num) {
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("delete from booking where bookingNum = ?;");
+            stmt.setObject(1, num);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+    }
 
     //추가
     //검색

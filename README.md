@@ -49,9 +49,16 @@ CREATE TABLE `booking` (
   `bookingNum` int NOT NULL AUTO_INCREMENT,
   `userId` varchar(15) NOT NULL,
   `movieListId` int unsigned NOT NULL,
-  `seat` varchar(3) NOT NULL,
   bookingDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`bookingNum`),
   foreign key(movieListId) references movieList(movieListId),
   foreign key(userId) references user(id)
+);
+
+CREATE TABLE `bookingSeat` (
+  `num` int NOT NULL AUTO_INCREMENT,
+  `bookingNum` int NOT NULL,
+  `seat` varchar(3) NOT NULL,
+  foreign key(bookingNum) references booking(bookingNum) ON DELETE CASCADE,
+  PRIMARY KEY (`num`)
 );
