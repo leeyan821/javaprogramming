@@ -51,7 +51,7 @@ public class AdminMain extends JFrame {
         a.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                new AdminMovie();
             }
         });
     }

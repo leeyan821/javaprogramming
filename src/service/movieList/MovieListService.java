@@ -22,4 +22,19 @@ public class MovieListService {
     public void addMovieList(Integer movieNum, String theater, String date, String time, Integer room){
         dao.addMovieList(movieNum,theater,date,time,room);
     }
+    public List<domain.MovieList> findMovieByName(String name){
+        return dao.findMovieByName(name);
+    }
+
+    public domain.MovieList find(String movieNum, String theater, String date, String time, Integer room) {
+        return dao.find(movieNum, theater, date, time, room);
+    }
+
+    public void delete(Integer num) {
+        dao.delete(num);
+    }
+
+    public void update(Integer num, String theater, String date, String time, Integer room) {
+        dao.update(num, theater,date,time,room);
+    }
 }

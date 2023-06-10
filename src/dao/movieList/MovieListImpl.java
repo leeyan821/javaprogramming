@@ -1,9 +1,8 @@
 package dao.movieList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.awt.*;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +74,109 @@ public class MovieListImpl implements MovieList{
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Add MovieList Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+    }
+
+    @Override
+    public List<domain.MovieList> findMovieByName(String name) {
+        List<domain.MovieList> list = new ArrayList<>();
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select * from movielist where movieNum = (" +
+                    "select movieNum from movie where movieName = ?)");
+            stmt.setString(1,name);
+            rs = stmt.executeQuery();
+
+            //SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            while(rs.next()){
+                Integer id = rs.getInt("movieListId");
+                Integer mNum = rs.getInt("movieNum");
+                String the = rs.getString("theater");
+                String date = rs.getString("date");
+                //Time t = rs.getTime("time");
+                //String time = dateFormat.format(t);
+                Timestamp time = rs.getTimestamp("time");
+                Integer room = rs.getInt("room");
+                domain.MovieList a = new domain.MovieList(id,mNum,the,date,time,room);
+                list.add(a);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Find By Name Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return list;
+    }
+
+    @Override
+    public domain.MovieList find(String num, String theater, String date, String time, Integer room) {
+        domain.MovieList list = null;
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select * from movielist where movieNum = ? and " +
+                    "theater = ? and date = ? and time = ? and room = ?");
+
+            stmt.setString(1,num);
+            stmt.setString(2,theater);
+            stmt.setString(3,date);
+            stmt.setString(4,time);
+            stmt.setInt(5,room);
+
+            rs = stmt.executeQuery();
+            rs.next();
+            list = new domain.MovieList(rs.getInt("movieListId"),rs.getInt("movieNum"),
+                    rs.getString("theater"), rs.getString("date"), rs.getTimestamp("time"),
+                    rs.getInt("room"));
+
+        } catch (SQLException e) {
+            System.out.println("Find Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return list;
+    }
+
+    @Override
+    public void delete(Integer num) {
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("delete from movielist where movieListId = ?");
+            stmt.setInt(1, num);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Delete Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+    }
+
+    @Override
+    public void update(Integer num, String theater, String date, String time, Integer room) {
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("update movielist set theater = ?, date = ?, time = ?, room = ? " +
+                    "where movieListId = ?");
+            stmt.setString(1,theater);
+            stmt.setString(2,date);
+            stmt.setString(3, time);
+            stmt.setInt(4,room);
+            stmt.setInt(5,num);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Update Error");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {

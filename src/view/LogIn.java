@@ -129,16 +129,12 @@ public class LogIn extends JFrame {
 			}
 		});
 
-		/*exit.addActionListener(new ActionListener() {
-
+		exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				dispose();
-
 			}
-		});*/
-
+		});
 	}
 
 	public static void main(String[] args) {
