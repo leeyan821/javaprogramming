@@ -1,5 +1,7 @@
 package dao.movie;
 
+import domain.Admin;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class MovieImpl implements Movie {
         List<String> re = new ArrayList<>();
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("SELECT movielist.theater FROM movie, movielist where movie.movieName = ? and movie.movieNum = movielist.movieNum;");
+            stmt = conn.prepareStatement("SELECT distinct movielist.theater FROM movie, movielist where movie.movieName = ? and movie.movieNum = movielist.movieNum;");
             stmt.setString(1, title);
 
             rs = stmt.executeQuery();
@@ -65,7 +67,7 @@ public class MovieImpl implements Movie {
         List<String> re = new ArrayList<>();
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("SELECT date FROM movie, movielist where movie.movieName = ? and theater = ? and movie.movieNum = movielist.movieNum;");
+            stmt = conn.prepareStatement("SELECT distinct date FROM movie, movielist where movie.movieName = ? and theater = ? and movie.movieNum = movielist.movieNum;");
             stmt.setString(1, movie);
             stmt.setString(2, theater);
 
@@ -91,7 +93,7 @@ public class MovieImpl implements Movie {
         Time t;
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("SELECT time FROM movie, movielist where movie.movieName = ? and theater = ? and date = ?" +
+            stmt = conn.prepareStatement("SELECT distinct time FROM movie, movielist where movie.movieName = ? and theater = ? and date = ?" +
                     "and movie.movieNum = movielist.movieNum;");
             stmt.setString(1, movie);
             stmt.setString(2, theater);
@@ -185,29 +187,46 @@ public class MovieImpl implements Movie {
 
 
     //추가
-    //검색
-    /*@Override
-    public List<domain.Movie> searchMovieList(String movieName) {
-        List<domain.Movie> re = new ArrayList<>();
-        domain.Movie movie = null;
+    //영화 추가
+    @Override
+    public void addMovie(String name) {
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("select * from movie where movieName like ?");
-            stmt.setString(1, '%'+movieName+'%');
-
-            rs = stmt.executeQuery();
-            while(rs.next()){
-                movie = new domain.Movie(rs.getInt("movieNum"),rs.getString("movieName"),rs.getInt("purchase"));
-                re.add(movie);
-            }
-
+            stmt = conn.prepareStatement("insert into movie(movieName) values(?)");
+            stmt.setString(1, name);
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Search Error");
+            System.out.println("Add Movie Error");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }finally {
             close(rs,stmt,conn);
         }
-        return re;
-    }*/
+    }
+
+    //전체 내림차순 받아오기
+    @Override
+    public List<domain.Movie> getAll() {
+        List<domain.Movie> list = new ArrayList<>();
+        domain.Movie m = null;
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select * from movie order by purchase desc");
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                m = new domain.Movie(rs.getInt("movieNum"),rs.getString("movieName"),rs.getInt("purchase"));
+                list.add(m);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Get All Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return list;
+    }
+
 }

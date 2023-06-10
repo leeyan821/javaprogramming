@@ -1,8 +1,11 @@
 package controller.movie;
 
+import domain.Movie;
+import dto.movie.MoviList;
 import service.movie.MovieService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MovieController {
@@ -42,6 +45,27 @@ public class MovieController {
     public List<String> search(String name){
         List<String> re = new ArrayList<>();
         movieService.getAllMovie().stream().filter(x->x.contains(name)).forEach(x-> re.add(x));
+        return re;
+    }
+    //영화추가
+    public Integer addMovie(String name){
+        for (String a:movieService.getAllMovie()) {
+            if(name.equals(a)){
+                return 1;
+            }
+        }
+        movieService.addMovie(name);
+        return 0;
+    }
+    //전부 가져오기
+    public List<MoviList> getAll(){
+        List<MoviList> re = new ArrayList<>();
+        for (Movie a: movieService.getAll()) {
+            MoviList r = new MoviList();
+            r.setMovieName(a.getMovieName());
+            r.setPurchase(a.getPurchase());
+            re.add(r);
+        }
         return re;
     }
 }

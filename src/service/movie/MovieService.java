@@ -43,4 +43,13 @@ public class MovieService {
     public List<String> getBookingList(int num) {
         return dao.getBookingList(num);
     }
+
+    //영화 추가
+    public void addMovie(String name){
+        dao.addMovie(name);
+    }
+    //전부 가져오기
+    public List<domain.Movie> getAll(){
+        return dao.getAll();
+    }
 }

@@ -1,23 +1,28 @@
 package view;
 
 import controller.movie.MovieController;
+import controller.movieList.MovieListController;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class PlusMovie extends JFrame {
     private JPanel mPanel, content, timePanel;
-    private JLabel label, movieName, theater, date, room, time, blank;
-    private JComboBox list;
-    private JTextField tMovieName;
+    private JLabel label, movieName, theater, date, room, time, newTheater;
+    private JComboBox list, list2;
+    private JTextField tMovieName, tTheaterName;
     private JButton btn1, btn2;
     private JSpinner spinner, h,m;
-    private String[] th = {"T1","T3","A5","A8","S1","S7"};
-    private JComboBox<String> list2 = new JComboBox<String>(th);
+
     MovieController movieController = new MovieController();
+    MovieListController movieListController = new MovieListController();
 
     //추가 중
     PlusMovie(){
@@ -29,7 +34,6 @@ public class PlusMovie extends JFrame {
         this.setLayout(new BorderLayout());
         mPanel = new JPanel();
         mPanel.setBounds(100,0,300,300);
-        //mPanel.setLayout(new BorderLayout());
         this.add(mPanel);
 
         label = new JLabel("영화 추가");
@@ -37,7 +41,7 @@ public class PlusMovie extends JFrame {
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label,BorderLayout.NORTH);
 
-        content = new JPanel(new GridLayout(6,2,30,20));
+        content = new JPanel(new GridLayout(7,2,30,20));
 
         //1
         movieName = new JLabel("영화 선택");
@@ -49,7 +53,7 @@ public class PlusMovie extends JFrame {
         content.add(list);
 
         //2
-        tMovieName = new JTextField((String) list.getSelectedItem());
+        tMovieName = new JTextField();
         tMovieName.setColumns(20);
         content.add(tMovieName);
 
@@ -58,12 +62,24 @@ public class PlusMovie extends JFrame {
 
         //3
         theater = new JLabel("극장 선택");
+        theater.setFont(new Font("AppleSDGothicNeoR", Font.BOLD, 15));
         content.add(theater);
 
+        list2 = new JComboBox(movieListController.getAllTheater().toArray());
         content.add(list2);
 
         //4
+        newTheater = new JLabel("극장 직접 입력");
+        newTheater.setFont(new Font("AppleSDGothicNeoR", Font.BOLD, 15));
+        content.add(newTheater);
+
+        tTheaterName = new JTextField();
+        tTheaterName.setColumns(20);
+        content.add(tTheaterName);
+
+        //5
         date = new JLabel("날짜 선택");
+        date.setFont(new Font("AppleSDGothicNeoR", Font.BOLD, 15));
         content.add(date);
 
         UtilDateModel model = new UtilDateModel();
@@ -71,8 +87,9 @@ public class PlusMovie extends JFrame {
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
         content.add(datePicker);
 
-        //5
+        //6
         time = new JLabel("시간 선택");
+        time.setFont(new Font("AppleSDGothicNeoR", Font.BOLD, 15));
         content.add(time);
 
         Integer[] hour = new Integer[24];
@@ -87,6 +104,9 @@ public class PlusMovie extends JFrame {
         SpinnerListModel ti2 = new SpinnerListModel(minute);
         h.setModel(ti);
         m.setModel(ti2);
+        h.setValue(10);
+        m.setValue(30);
+
         timePanel.add(h);
         JLabel p1 = new JLabel("시");
         timePanel.add(p1);
@@ -95,8 +115,9 @@ public class PlusMovie extends JFrame {
         timePanel.add(p2);
         content.add(timePanel);
 
-        //6
+        //7
         room = new JLabel("상영관 선택");
+        room.setFont(new Font("AppleSDGothicNeoR", Font.BOLD, 15));
         content.add(room);
 
         Integer[] ro = {1,2,3,4,5,6,7,8,9};
@@ -112,11 +133,58 @@ public class PlusMovie extends JFrame {
         btn2.setFont(new Font("AppleSDGothicNeoR", Font.BOLD, 15));
         this.add(btn2,BorderLayout.SOUTH);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-    public static void main(String[] args) {
-        new PlusMovie();
+
+        //액션
+        //리스트 선택
+        list.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tMovieName.setText(list.getSelectedItem().toString());
+            }
+        });
+        list2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tTheaterName.setText(list2.getSelectedItem().toString());
+            }
+        });
+        //영화 추가
+        btn1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = tMovieName.getText();
+                Integer n = movieController.addMovie(name);
+                if(n == 1) JOptionPane.showMessageDialog(null, "이미 존재합니다.");
+                else if(n == 0) JOptionPane.showMessageDialog(null, "추가 완료");
+                dispose();
+                new PlusMovie();
+            }
+        });
+
+        //최종 저장
+        btn2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = tMovieName.getText();
+                String theater = tTheaterName.getText();
+
+                Integer year = model.getYear();
+                Integer month = model.getMonth() + 1;
+                Integer day = model.getDay();
+                String date = year+"-"+month+"-"+day;
+
+                Integer sHour = (Integer) h.getValue();
+                Integer sMin = (Integer) m.getValue();
+                String time = sHour + ":" + sMin + ":00";
+
+                Integer room = (Integer) spinner.getValue();
+
+                movieListController.save(name,theater,date,time,room);
+                JOptionPane.showMessageDialog(null, "추가 완료");
+                dispose();
+            }
+        });
     }
 
 }

@@ -1,5 +1,7 @@
 package view;
 
+import controller.movie.MovieController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,10 +13,11 @@ public class AdminMain extends JFrame {
     private JMenu movie;
     private JButton btnPlus;
     private JMenuItem a,b;
+
     AdminMain(){
         super("Main");
         this.setResizable(true);
-        this.setSize(500, 500);
+        this.setSize(300, 300);
         this.setLocationRelativeTo(null);
 
         this.setLayout(new FlowLayout());
@@ -43,6 +46,12 @@ public class AdminMain extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new PlusMovie();
+            }
+        });
+        a.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }

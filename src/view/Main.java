@@ -1,9 +1,17 @@
 package view;
 
+import controller.movie.MovieController;
+import dto.movie.MoviList;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 
 public class Main extends JFrame {
     private JPanel mPanel;
@@ -13,6 +21,7 @@ public class Main extends JFrame {
     private JTextField tSearch;
     private JButton btnSearch;
     private JMenuItem a,b,c;
+    MovieController movieController = new MovieController();
 
     Main(){
         this(null);
@@ -60,6 +69,23 @@ public class Main extends JFrame {
         mPanel.add(searchMovie,BorderLayout.NORTH);
 
         //영화 리스트
+        String header[] = {"Title","Count"};
+        List<MoviList> result = new ArrayList<>();
+        result = movieController.getAll();
+        String contents[][] = new String[result.size()][2];
+
+        for(int i=0;i< result.size();i++){
+            int j=0;
+            contents[i][j++] = result.get(i).getMovieName();
+            contents[i][j] = String.valueOf(result.get(i).getPurchase());
+        }
+
+        JTable table = new JTable(contents,header);
+        JScrollPane scrolledTable = new JScrollPane(table);
+        scrolledTable.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        table.getColumn("Title").setPreferredWidth(300);
+
+        mPanel.add(scrolledTable,BorderLayout.CENTER);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -73,6 +99,12 @@ public class Main extends JFrame {
             }
         });
 
+        a.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +112,6 @@ public class Main extends JFrame {
             }
         });
     }
-
 
     public static void main(String[] args) {
         Main m = new Main();

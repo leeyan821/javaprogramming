@@ -18,4 +18,8 @@ public interface Movie extends DAO {
     void addBooking(int movieListId, List<String> selectedSeat);
 
     List<String> getBookingList(int num);
+
+    //추가
+    void addMovie(String name);
+    List<domain.Movie> getAll();
 }
