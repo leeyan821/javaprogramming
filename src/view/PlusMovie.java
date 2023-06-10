@@ -172,7 +172,15 @@ public class PlusMovie extends JFrame {
                 Integer year = model.getYear();
                 Integer month = model.getMonth() + 1;
                 Integer day = model.getDay();
-                String date = year+"-"+month+"-"+day;
+                String date = null;
+                if(month<10) {
+                    if(day<10) date = year+"-0"+month+"-0"+day;
+                    else date = year+"-0"+month+"-"+day;
+                }
+                else {
+                    if(day<10) date = year+"-"+month+"-0"+day;
+                    else date = year+"-"+month+"-"+day;
+                }
 
                 Integer sHour = (Integer) h.getValue();
                 Integer sMin = (Integer) m.getValue();
@@ -180,11 +188,17 @@ public class PlusMovie extends JFrame {
 
                 Integer room = (Integer) spinner.getValue();
 
-                movieListController.save(name,theater,date,time,room);
-                JOptionPane.showMessageDialog(null, "추가 완료");
-                dispose();
+                if(name.isEmpty() || theater.isEmpty() || date.isEmpty() || time.isEmpty() || room==null) {
+                    JOptionPane.showMessageDialog(null, "모두 입력하시오.");
+                }else {
+                    movieListController.save(name,theater,date,time,room);
+                    JOptionPane.showMessageDialog(null, "추가 완료");
+                    dispose();
+                }
             }
         });
     }
-
+    public static void main(String[] args) {
+        new PlusMovie();
+    }
 }

@@ -100,8 +100,8 @@ public class LogIn extends JFrame {
 						int value = admin.logIn(id, password);
 						if (value == 0) {
 							JOptionPane.showMessageDialog(null, "로그인 완료");
-							new AdminMain();
 							dispose();
+							new AdminMain();
 						} else {
 							JOptionPane.showMessageDialog(null, "관리자 로그인 실패");
 						}
@@ -109,8 +109,8 @@ public class LogIn extends JFrame {
 						int value = user.userLogIn(id, password);
 						if (value == 0) {
 							JOptionPane.showMessageDialog(null, "로그인 완료");
-							view.Main m = new Main(id);
 							dispose();
+							view.Main m = new Main(id);
 						} else {
 							JOptionPane.showMessageDialog(null, "사용자 로그인 실패");
 						}
@@ -122,14 +122,13 @@ public class LogIn extends JFrame {
 		});
 
 		//회원가입 액션
-		/*
 		register.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//RegisterFrame rf = new RegisterFrame();
+				new JoinUser();
 			}
 		});
+
 		/*exit.addActionListener(new ActionListener() {
 
 			@Override

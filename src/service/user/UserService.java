@@ -5,6 +5,8 @@ import dao.user.UserDAOImpl;
 import domain.User;
 import dto.user.GetIdPwd;
 
+import java.util.List;
+
 public class UserService {
     private UserDAO dao;
     private static UserService service;
@@ -17,6 +19,12 @@ public class UserService {
     public User userLogIn(GetIdPwd request){
         User user = dao.uIdPwd(request.getId(), request.getPwd());
         return user;
+    }
+
+    public List<String> getAllId(){return dao.getAllId();}
+
+    public void addUser(String id, String pwd, String name){
+        dao.addUser(id,pwd,name);
     }
 
 }

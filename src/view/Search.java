@@ -25,6 +25,8 @@ public class Search extends JFrame implements ActionListener {
         this.setLayout(null);
 
         sPanel = new JPanel();
+        sPanel.setBorder(BorderFactory.createEmptyBorder(0 , 20 , 20 , 20));
+
         sPanel.setLayout(Gbag);
         JLabel te = new JLabel("< 검색 결과 >");
         te.setFont(new Font("AppleSDGothicNeoR", Font.BOLD, 18));
@@ -76,5 +78,8 @@ public class Search extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+    public static void main(String[] args) {
+        new Search();
     }
 }

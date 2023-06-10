@@ -22,4 +22,14 @@ public class UserController {
             return 1;
         }
     }
+
+    public Integer checkId(String id){
+        for (String a:userService.getAllId()) {
+            if(a.equals(id)) return 0;
+        }
+        return 1;
+    }
+    public void addUser(String id, String pwd, String name){
+        userService.addUser(id,pwd,name);
+    }
 }

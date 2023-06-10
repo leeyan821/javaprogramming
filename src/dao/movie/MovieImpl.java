@@ -1,8 +1,5 @@
 package dao.movie;
 
-import domain.Admin;
-
-import domain.MovieList;
 import dto.movie.MovieInfo;
 
 import java.sql.*;
