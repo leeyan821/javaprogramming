@@ -49,7 +49,7 @@ public class Seat extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(selectedSeat.size() > 0 && (Integer.parseInt(sRatio) == selectedSeat.size())) {
-                    new Payment(id, num, selectedSeat);
+                   // new Payment(id, num, selectedSeat);
                     setVisible(false);
                 }
                 else
