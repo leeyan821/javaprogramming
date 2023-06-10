@@ -47,9 +47,9 @@ CREATE TABLE `user` (
 
 CREATE TABLE `booking` (
   `bookingNum` int NOT NULL AUTO_INCREMENT,
+  `userId` varchar(15) NOT NULL,
   `movieListId` int unsigned NOT NULL,
   `seat` varchar(3) NOT NULL,
-  `userId` varchar(15) NOT NULL, 
   PRIMARY KEY (`bookingNum`),
   foreign key(movieListId) references movieList(movieListId),
   foreign key(userId) references user(id)

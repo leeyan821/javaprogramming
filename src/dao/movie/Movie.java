@@ -1,6 +1,7 @@
 package dao.movie;
 
 import dao.DAO;
+import dto.movie.MovieInfo;
 
 import java.util.List;
 
@@ -15,7 +16,9 @@ public interface Movie extends DAO {
 
     int findByMovieListId(String movie, String theater, String date, String time);
 
-    void addBooking(int movieListId, List<String> selectedSeat);
+    void addBooking(String userId, int movieListId, List<String> selectedSeat);
 
     List<String> getBookingList(int num);
+
+    MovieInfo getMovieInfo(int movieListId);
 }

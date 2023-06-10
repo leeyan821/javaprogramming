@@ -1,5 +1,6 @@
 package controller.movie;
 
+import dto.movie.MovieInfo;
 import service.movie.MovieService;
 
 import java.util.ArrayList;
@@ -25,12 +26,10 @@ public class MovieController {
     }
 
     public int findByMovieListId(String movie, String theater, String date, String time) {
-        int num = movieService.findByMovieListId(movie, theater, date, time);
-        System.out.println(num);
         return movieService.findByMovieListId(movie, theater, date, time);
     }
-    public void addBooking(int id, List<String> selectedSeat) {
-        movieService.addBooking(id, selectedSeat);
+    public void addBooking(String userId, int movieListId, List<String> selectedSeat) {
+        movieService.addBooking(userId, movieListId, selectedSeat);
     }
 
     public List<String> getBookingList(int num) {
@@ -43,5 +42,9 @@ public class MovieController {
         List<String> re = new ArrayList<>();
         movieService.getAllMovie().stream().filter(x->x.contains(name)).forEach(x-> re.add(x));
         return re;
+    }
+
+    public MovieInfo getMovieInfo(int movieListId) {
+        return movieService.getMovieInfo(movieListId);
     }
 }

@@ -2,6 +2,7 @@ package service.movie;
 
 import dao.movie.Movie;
 import dao.movie.MovieImpl;
+import dto.movie.MovieInfo;
 
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class MovieService {
         return dao.getAllTime(movie, theater, date);
     }
 
-    public void addBooking(int id, List<String> selectedSeat) {
-        dao.addBooking(id, selectedSeat);
+    public void addBooking(String userId, int movieListId, List<String> selectedSeat) {
+        dao.addBooking(userId, movieListId, selectedSeat);
     }
 
     public int findByMovieListId(String movie, String theater, String date, String time) {
@@ -42,5 +43,9 @@ public class MovieService {
 
     public List<String> getBookingList(int num) {
         return dao.getBookingList(num);
+    }
+
+    public MovieInfo getMovieInfo(int movieListId) {
+        return dao.getMovieInfo(movieListId);
     }
 }
