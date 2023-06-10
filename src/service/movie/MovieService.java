@@ -48,4 +48,8 @@ public class MovieService {
     public MovieInfo getMovieInfo(int movieListId) {
         return dao.getMovieInfo(movieListId);
     }
+
+    public String[][] getUserBookingList(String userId) {
+        return dao.getUserBookingList(userId);
+    }
 }
