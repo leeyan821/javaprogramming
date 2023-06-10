@@ -50,6 +50,7 @@ CREATE TABLE `booking` (
   `userId` varchar(15) NOT NULL,
   `movieListId` int unsigned NOT NULL,
   `seat` varchar(3) NOT NULL,
+  bookingDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`bookingNum`),
   foreign key(movieListId) references movieList(movieListId),
   foreign key(userId) references user(id)

@@ -25,4 +25,6 @@ public interface Movie extends DAO {
     List<domain.Movie> getAll();
 
     MovieInfo getMovieInfo(int movieListId);
+
+    String[][] getUserBookingList(String userId);
 }

@@ -49,6 +49,10 @@ public class MovieService {
         return dao.getMovieInfo(movieListId);
     }
 
+    public String[][] getUserBookingList(String userId) {
+        return dao.getUserBookingList(userId);
+    }
+
     //영화 추가
     public void addMovie(String name){
         dao.addMovie(name);

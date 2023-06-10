@@ -220,6 +220,32 @@ public class MovieImpl implements Movie {
         return null;
     }
 
+    @Override
+    public String[][] getUserBookingList(String userId) {
+        String[][] re = null;
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("SELECT * FROM booking where userId = ?;");
+            stmt.setString(1, userId);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                for (int i = 0; ; i++) {
+                    re[rs.getRow()][i] = rs.getString(i);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rs, stmt, conn);
+        }
+        return re;
+    }
+
 
     //추가
     //영화 추가

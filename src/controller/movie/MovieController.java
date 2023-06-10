@@ -71,4 +71,8 @@ public class MovieController {
     public MovieInfo getMovieInfo(int movieListId) {
         return movieService.getMovieInfo(movieListId);
     }
+
+    public String[][] getUserBookingList(String userId) {
+        return movieService.getUserBookingList(userId);
+    }
 }
