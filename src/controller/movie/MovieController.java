@@ -3,6 +3,8 @@ package controller.movie;
 import domain.Movie;
 import dto.movie.MoviList;
 import dto.movie.MovieInfo;
+import dto.user.UserBookingInfo;
+import dto.user.UserBookingList;
 import service.movie.MovieService;
 
 import java.util.ArrayList;
@@ -72,7 +74,15 @@ public class MovieController {
         return movieService.getMovieInfo(movieListId);
     }
 
-    public String[][] getUserBookingList(String userId) {
+    public List<UserBookingList> getUserBookingList(String userId) {
         return movieService.getUserBookingList(userId);
+    }
+
+    public UserBookingInfo getUserBookingInfo(Object num) {
+        return movieService.getUserBookingInfo(num);
+    }
+
+    public void deleteBooking(Object num) {
+        movieService.deleteBooking(num);
     }
 }

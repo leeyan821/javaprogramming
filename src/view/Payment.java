@@ -12,6 +12,7 @@ import java.util.List;
 public class Payment extends JFrame {
     MovieController movieController = new MovieController();
     String seat = "";
+    int bookingNum;
     public Payment(String userId, int movieListId, List<String> selectedSeat) {
         this.setTitle("결제");
         this.setResizable(true);
@@ -36,7 +37,7 @@ public class Payment extends JFrame {
         mOther.add(new JLabel("관람 날짜"));
         mOther.add(new JLabel(m.getDate()));
         mOther.add(new JLabel("관람 시간"));
-        mOther.add(new JLabel(m.getTime().toString()));
+        mOther.add(new JLabel(m.getTime()));
         mOther.add(new JLabel("상영관"));
         mOther.add(new JLabel(m.getRoom() + "관"));
         mOther.add(new JLabel("선택 좌석"));
