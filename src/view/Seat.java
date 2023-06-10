@@ -22,7 +22,7 @@ public class Seat extends JFrame implements ActionListener {
     int num;
     List<String> bookingSeat;
 
-    public Seat(String selectedMovie, String selectedTheater, String selectedDate, String selectedTime) {
+    public Seat(String id, String selectedMovie, String selectedTheater, String selectedDate, String selectedTime) {
         this.setTitle("좌석선택");
         this.setResizable(true);
         this.setSize(760, 600);
@@ -40,7 +40,7 @@ public class Seat extends JFrame implements ActionListener {
         JLabel l2= new JLabel("극장:" + selectedTheater);
         JLabel l3 = new JLabel("날짜: " + selectedDate);
         JLabel l4 = new JLabel("시간: " + selectedTime);
-        JButton b = new JButton("결제하기");
+        JButton b = new JButton("다음");
 
         num = movieController.findByMovieListId(selectedMovie, selectedTheater, selectedDate, selectedTime);
         bookingSeat = movieController.getBookingList(num);
@@ -49,11 +49,11 @@ public class Seat extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(selectedSeat.size() > 0 && (Integer.parseInt(sRatio) == selectedSeat.size())) {
-                    movieController.addBooking(num, selectedSeat);
+                    new Payment(id, num, selectedSeat);
+                    setVisible(false);
                 }
-                else {
+                else
                     JOptionPane.showMessageDialog(null, "선택한 인원/좌석을 확인해주세요.");
-                }
             }
         });
 
@@ -65,6 +65,7 @@ public class Seat extends JFrame implements ActionListener {
             int num = i;
             pb[i] = new JRadioButton(++num + "");
             pb[0].setSelected(true);
+            sRatio = pb[0].getText();
             buttonGroup.add(pb[i]);
             p.add(pb[i]);
             pb[i].addActionListener(new ActionListener() {
@@ -118,6 +119,7 @@ public class Seat extends JFrame implements ActionListener {
         add(chart, BorderLayout.CENTER);
         add(t, BorderLayout.NORTH);
         add(f, BorderLayout.SOUTH);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }

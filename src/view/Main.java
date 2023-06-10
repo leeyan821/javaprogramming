@@ -105,7 +105,7 @@ public class Main extends JFrame {
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MovieBooking();
+                new MovieBooking(id);
             }
         });
     }

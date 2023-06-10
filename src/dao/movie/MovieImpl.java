@@ -2,6 +2,9 @@ package dao.movie;
 
 import domain.Admin;
 
+import domain.MovieList;
+import dto.movie.MovieInfo;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -143,14 +146,15 @@ public class MovieImpl implements Movie {
     }
 
     @Override
-    public void addBooking(int movieListId, List<String> selectedSeat) {
+    public void addBooking(String userId, int movieListId, List<String> selectedSeat) {
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("insert into booking(movieListId, seat) values (?, ?);");
+            stmt = conn.prepareStatement("insert into booking(userId, movieListId, seat) values (?, ?, ?);");
 
             for (int i = 0; i < selectedSeat.size(); i++) {
-                stmt.setInt(1, movieListId);
-                stmt.setString(2, selectedSeat.get(i));
+                stmt.setString(1, userId);
+                stmt.setInt(2, movieListId);
+                stmt.setString(3, selectedSeat.get(i));
                 stmt.executeUpdate();
             }
         } catch (SQLException e) {
@@ -183,6 +187,37 @@ public class MovieImpl implements Movie {
             close(rs, stmt, conn);
         }
         return re;
+    }
+
+    @Override
+    public MovieInfo getMovieInfo(int movieListId) {
+        MovieInfo m;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH시 mm분");
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("SELECT movieName, theater, date, time, room FROM movielist, movie where movie.movieNum = movielist.movieNum " +
+                    "and movieListId = ?;");
+            stmt.setInt(1, movieListId);
+
+            rs = stmt.executeQuery();
+            rs.next();
+            m = new MovieInfo(
+                    rs.getString("movieName"),
+                    rs.getString("theater"),
+                    dateFormat.format(rs.getDate("date")),
+                    timeFormat.format(rs.getTime("time")),
+                    rs.getInt("room")
+            );
+            return m;
+        } catch (SQLException e) {
+            System.out.println("");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return null;
     }
 
 

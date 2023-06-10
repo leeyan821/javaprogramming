@@ -16,7 +16,7 @@ public class MovieBooking extends JFrame {
     String selectedDate;
     String selectedTime;
 
-    public MovieBooking() {
+    public MovieBooking(String id) {
         this.setTitle("영화예매");
         this.setResizable(true);
         this.setSize(800, 400);
@@ -35,6 +35,10 @@ public class MovieBooking extends JFrame {
         JLabel i2 = new JLabel("극장");
         JLabel i3 = new JLabel("날짜");
         JLabel i4 = new JLabel("시간");
+        i1.setFont(new Font("", Font.BOLD, 20));
+        i2.setFont(new Font("", Font.BOLD, 20));
+        i3.setFont(new Font("", Font.BOLD, 20));
+        i4.setFont(new Font("", Font.BOLD, 20));
         l.add(i1);
         l.add(i2);
         l.add(i3);
@@ -82,7 +86,7 @@ public class MovieBooking extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 selectedTime = timeList.getSelectedValue();
                 if(selectedMovie != null && selectedTheater != null && selectedDate != null && selectedTime != null) {
-                    new Seat(selectedMovie, selectedTheater, selectedDate, selectedTime);
+                    new Seat(id, selectedMovie, selectedTheater, selectedDate, selectedTime);
                     setVisible(false);
                 }
             }
@@ -97,11 +101,7 @@ public class MovieBooking extends JFrame {
         add(l, BorderLayout.NORTH);
         add(f, BorderLayout.SOUTH); //버튼
 
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new MovieBooking();
     }
 }
