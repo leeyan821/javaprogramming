@@ -96,4 +96,8 @@ public class MovieController {
         }
         return 0;
     }
+
+    public String getUserBookingSeats(Object num) {
+        return movieService.getUserBookingSeats(num);
+    }
 }

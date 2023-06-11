@@ -16,7 +16,7 @@ import java.util.List;
 public class UserMovieBookingList extends JFrame {
     MovieController movieController = new MovieController();
     Object num;
-    JLabel l1, l2, l3, l4;
+    JLabel l1, l2, l3, l4, l5;
     UserBookingInfo ui;
 
     public UserMovieBookingList(String userId) {
@@ -28,7 +28,7 @@ public class UserMovieBookingList extends JFrame {
 
         JPanel j = new JPanel(new GridLayout(2, 1));
         JPanel j1 = new JPanel(new BorderLayout(10, 0));
-        JPanel info = new JPanel(new GridLayout(4, 2));
+        JPanel info = new JPanel(new GridLayout(5, 2));
 
         String[] h = {"예매번호", "예매일", "영화명"};
         List<UserBookingList> list = movieController.getUserBookingList(userId);
@@ -47,6 +47,7 @@ public class UserMovieBookingList extends JFrame {
         l2 = new JLabel();
         l3 = new JLabel();
         l4 = new JLabel();
+        l5 = new JLabel();
 
         info.add(new JLabel("영화명"));
         info.add(l1);
@@ -56,6 +57,8 @@ public class UserMovieBookingList extends JFrame {
         info.add(l3);
         info.add(new JLabel("상영관"));
         info.add(l4);
+        info.add(new JLabel("예매좌석"));
+        info.add(l5);
 
         DefaultTableModel model = new DefaultTableModel(data, h);
         JTable table = new JTable(model);
@@ -67,11 +70,13 @@ public class UserMovieBookingList extends JFrame {
                 int r = table.getSelectedRow();
                 num = table.getValueAt(r, 0);
                 ui = movieController.getUserBookingInfo(num);
+                String seat = movieController.getUserBookingSeats(num);
 
                 l1.setText(table.getValueAt(r, 2).toString());
                 l2.setText(ui.getTheater());
                 l3.setText(ui.getDate() + " " + ui.getTime());
                 l4.setText(ui.getRoom() + "관");
+                l5.setText(seat);
             }
         });
         j.add(table);
@@ -95,7 +100,6 @@ public class UserMovieBookingList extends JFrame {
         add(j1, BorderLayout.SOUTH);
 
         add(new JScrollPane(table));
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 }

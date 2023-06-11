@@ -376,4 +376,26 @@ public class MovieImpl implements Movie {
         }
     }
 
+    @Override
+    public String getUserBookingSeats(Object num) {
+        String s = "";
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("SELECT seat FROM bookingSeat where bookingNum = ?;");
+            stmt.setObject(1, num);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                s += rs.getString("seat") + " ";
+            }
+        } catch (SQLException e) {
+            System.out.println("getUserBookingSeats Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return s;
+    }
+
 }
