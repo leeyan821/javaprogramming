@@ -150,6 +150,7 @@ public class MovieListImpl implements MovieList{
     @Override
     public void delete(Integer num) {
         try {
+            System.out.println("back: "+num);
             conn = getConnect();
             stmt = conn.prepareStatement("delete from movielist where movieListId = ?");
             stmt.setInt(1, num);

@@ -87,4 +87,13 @@ public class MovieController {
     public void deleteMovie(String name) {
         movieService.deleteMovie(name);
     }
+
+    public Integer check(String name) {
+        for (String a:movieService.getAllMovie()) {
+            if(name.equals(a)){
+                return 1;
+            }
+        }
+        return 0;
+    }
 }

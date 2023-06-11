@@ -70,7 +70,7 @@ public class Payment extends JFrame {
         tBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new UserMovieBookingList(userId);
+                new UserMovieBookingList(userId);
                 setVisible(false);
             }
         });

@@ -150,7 +150,6 @@ public class AdminMovie extends JFrame {
                     if(answer==JOptionPane.YES_OPTION){  //사용자가 yes를 눌렀을 경우
                         //영화 틀 삭제
                         Integer n = movieListController.deleteMovie(com1.getSelectedItem().toString());
-                        System.out.println(n);
                         if(n == 0) {
                             movieController.deleteMovie(com1.getSelectedItem().toString());
                             JOptionPane.showMessageDialog(null, "삭제 완료");
@@ -173,10 +172,16 @@ public class AdminMovie extends JFrame {
                     if (num == 0) {
                         JOptionPane.showMessageDialog(null, "존재하지 않음");
                     } else {
-                        movieListController.delete(num);
-                        JOptionPane.showMessageDialog(null, "삭제되었습니다.");
-                        dispose();
-                        new AdminMovie();
+                        Integer re = movieListController.check(num);
+                        System.out.println("front:"+re);
+                        if(re==0){
+                            movieListController.delete(num);
+                            JOptionPane.showMessageDialog(null, "삭제되었습니다.");
+                            dispose();
+                            new AdminMovie();
+                        }else {
+                            JOptionPane.showMessageDialog(null, "삭제 불가 : 예매중");
+                        }
                     }
                 }
             }
