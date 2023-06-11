@@ -95,7 +95,7 @@ public class UserMovieBookingList extends JFrame {
         add(j1, BorderLayout.SOUTH);
 
         add(new JScrollPane(table));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 }

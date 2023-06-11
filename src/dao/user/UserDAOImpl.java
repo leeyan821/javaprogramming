@@ -117,4 +117,25 @@ public class UserDAOImpl implements UserDAO {
             close(rs,stmt,conn);
         }
     }
+
+    @Override
+    public Integer checkDelete(String id) {
+        Integer re = 0;
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select bookingNum from booking where userId = ?");
+            stmt.setString(1,id);
+            rs = stmt.executeQuery();
+
+            while(rs.next())
+                re = rs.getInt("bookingNum");
+        } catch (SQLException e) {
+            System.out.println("Find Num Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return re;
+    }
 }

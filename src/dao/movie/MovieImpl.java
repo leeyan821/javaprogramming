@@ -288,6 +288,7 @@ public class MovieImpl implements Movie {
                     timeFormat.format(rs.getTime("time")),
                     rs.getInt("room")
             );
+
             return u;
         } catch (SQLException e) {
             System.out.println("getUserBookingInfo");
@@ -343,7 +344,7 @@ public class MovieImpl implements Movie {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                m = new domain.Movie(rs.getInt("movieNum"),rs.getString("movieName"),rs.getInt("purchase"));
+                m = new domain.Movie(rs.getInt("movieNum"),rs.getString("movieName"));
                 list.add(m);
             }
 

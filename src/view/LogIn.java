@@ -110,7 +110,7 @@ public class LogIn extends JFrame {
 						if (value == 0) {
 							JOptionPane.showMessageDialog(null, "로그인 완료");
 							dispose();
-							view.Main m = new Main(id);
+							view.Main2 m = new Main2(id);
 						} else {
 							JOptionPane.showMessageDialog(null, "사용자 로그인 실패");
 						}

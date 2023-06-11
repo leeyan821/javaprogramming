@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class Main extends JFrame {
+public class Main2 extends JFrame {
     private JPanel mPanel;
     private JMenuBar mb;
     private JMenu movie;
@@ -26,10 +26,10 @@ public class Main extends JFrame {
     MovieController movieController = new MovieController();
     MovieListController movieListController = new MovieListController();
 
-    Main(){
+    Main2(){
         this(null);
     }
-    Main(String id){
+    Main2(String id){
         super("Main");
         this.setResizable(true);
         this.setSize(500, 500);
@@ -46,11 +46,9 @@ public class Main extends JFrame {
         mb = new JMenuBar();
         movie = new JMenu("Menu");
 
-        a = new JMenuItem("영화 목록");
         b = new JMenuItem("예매");
         c = new JMenuItem("마이페이지");
-        movie.add(a);
-        movie.add(b);
+         movie.add(b);
         movie.add(c);
         mb.add(movie);
         this.setJMenuBar(mb);
@@ -73,30 +71,6 @@ public class Main extends JFrame {
 
         //영화 리스트
         String header[] = {"Title"};
-        List<MoviList> result = new ArrayList<>();
-        result = movieController.getAll();
-        List<String> re2 = movieListController.top();
-        String contents[][] = new String[result.size()][2];
-        //String contents[][] = new String[re2.size()][1];
-
-        for(int i=0;i< result.size();i++){
-            int j=0;
-            contents[i][j] = result.get(i).getMovieName();
-        }
-        /*for(int i=0;i< re2.size();i++){
-            int j=0;
-            contents[i][j] = re2.get(i);
-        }*/
-
-        JTable table = new JTable(contents,header);
-        JScrollPane scrolledTable = new JScrollPane(table);
-        scrolledTable.setBorder(BorderFactory.createEmptyBorder(10,50,10,50));
-        table.getColumn("Title").setPreferredWidth(300);
-
-        mPanel.add(scrolledTable,BorderLayout.CENTER);
-
-        /*String header[] = {"Title"};
-
         Vector<String> vector = new Vector<>();
         vector.addElement("Title");
 
@@ -108,7 +82,11 @@ public class Main extends JFrame {
         };
         table = new JTable(model);
         JScrollPane scroll = new JScrollPane(table);
-        */
+        scroll.setBorder(BorderFactory.createEmptyBorder(0 , 50 , 30 , 50));
+
+        mPanel.add(scroll,BorderLayout.CENTER);
+
+
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -118,16 +96,17 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = tSearch.getText();
-                new Search(id,name);
+                //new Search(id,name);
+                model.setNumRows(0);
+                List<String> list = movieController.search(name);
+                for(String data : list){
+                    Vector<String> v = new Vector<>();
+                    v.add(data);
+                    model.addRow(v);
+                }
             }
         });
 
-        a.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,6 +123,6 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        Main m = new Main();
+        Main2 m = new Main2();
     }
 }

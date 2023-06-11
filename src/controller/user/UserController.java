@@ -48,4 +48,5 @@ public class UserController {
     public void deleteUser(String id) {
         userService.deleteUser(id);
     }
+    public Integer checkDelete(String id) { return userService.checkDelete(id);}
 }

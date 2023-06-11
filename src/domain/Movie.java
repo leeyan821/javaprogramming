@@ -3,12 +3,12 @@ package domain;
 public class Movie {
     private Integer movieNum;
     private String movieName;
-    Integer purchase; //팔린 수
+    //Integer purchase; //팔린 수
 
-    public Movie(Integer movieNum, String movieName, Integer purchase) {
+    public Movie(Integer movieNum, String movieName) {
         this.movieNum = movieNum;
         this.movieName = movieName;
-        this.purchase = purchase;
+        //this.purchase = purchase;
     }
 
     public Integer getMovieNum() {
@@ -19,7 +19,7 @@ public class Movie {
         return movieName;
     }
 
-    public Integer getPurchase() {
+    /*public Integer getPurchase() {
         return purchase;
-    }
+    }*/
 }

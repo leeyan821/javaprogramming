@@ -6,10 +6,12 @@ public interface DAO {
     default Connection getConnect() throws ClassNotFoundException, SQLException {
         Connection con = null;
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        //Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
         String server = "127.0.0.1:3306/javaprogramming";// 서버 주소
         String user_name = "root"; //  접속자 id
-        String password = "1234"; // 접속자 pw
+        //String password = "1224"; // 접속자 pw
+        String password = "1004";
 
         con = DriverManager.getConnection("jdbc:mysql://" + server + "?allowPublicRetrieval=true&useSSL=false", user_name, password);
 

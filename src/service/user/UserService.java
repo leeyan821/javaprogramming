@@ -34,4 +34,6 @@ public class UserService {
     public void deleteUser(String id) {
         dao.deleteUser(id);
     }
+
+    public Integer checkDelete(String id) {return dao.checkDelete(id);}
 }

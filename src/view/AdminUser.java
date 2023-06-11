@@ -85,10 +85,15 @@ public class AdminUser extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(num > 0){
-                    userController.deleteUser(table.getValueAt(table.getSelectedRow(),0).toString());
-                    JOptionPane.showMessageDialog(null, "삭제 완료");
-                    dispose();
-                    new AdminUser();
+                    Integer result = userController.checkDelete(table.getValueAt(table.getSelectedRow(),0).toString());
+                    if(result == 0){
+                        userController.deleteUser(table.getValueAt(table.getSelectedRow(),0).toString());
+                        JOptionPane.showMessageDialog(null, "삭제 완료");
+                        dispose();
+                        new AdminUser();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "삭제 불가 : 사용중");
+                    }
                 }else JOptionPane.showMessageDialog(null, "회원을 선택하시오.");
             }
         });
