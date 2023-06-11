@@ -63,7 +63,6 @@ public class MovieController {
         for (Movie a: movieService.getAll()) {
             MoviList r = new MoviList();
             r.setMovieName(a.getMovieName());
-            r.setPurchase(a.getPurchase());
             re.add(r);
         }
         return re;
