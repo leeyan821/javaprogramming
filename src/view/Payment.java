@@ -70,7 +70,7 @@ public class Payment extends JFrame {
         tBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new UserMovieBookingList(userId);
+                new UserMovieBookingList(userId);
                 setVisible(false);
             }
         });
@@ -79,7 +79,7 @@ public class Payment extends JFrame {
         add(btn, BorderLayout.SOUTH);
         add(mInfo, BorderLayout.CENTER);
 
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 }
