@@ -13,4 +13,6 @@ public interface UserDAO extends DAO{
     List<User> getAll();
 
     void deleteUser(String id);
+
+    Integer checkDelete(String id);
 }

@@ -3,6 +3,7 @@ package service.movieList;
 import dao.movieList.MovieList;
 import dao.movieList.MovieListImpl;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -39,4 +40,11 @@ public class MovieListService {
         dao.update(num, theater,date,time,room);
     }
     public Map<String,Integer> top(){ return dao.top();}
+
+    public Integer checkBooking(Integer id) { return dao.checkBooking(id);}
+
+    public Integer checkAddMovie(String theater, String date, String time, String time2, Integer room) {
+        return dao.checkAddMovie(theater,date,time,time2,room);
+    }
+
 }

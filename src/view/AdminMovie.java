@@ -143,11 +143,14 @@ public class AdminMovie extends JFrame {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!com1.getSelectedItem().toString().isEmpty()){
+                if(!com1.getSelectedItem().toString().isEmpty() && (change2[0].getText().isEmpty() || change2[1].getText().isEmpty() ||
+                        change2[2].getText().isEmpty() || change2[3].getText().isEmpty())){
+                    System.out.println(1);
                     int answer = JOptionPane.showConfirmDialog(null, com1.getSelectedItem().toString()+"를 삭제하시겠습니까?", "confirm",JOptionPane.YES_NO_OPTION );
                     if(answer==JOptionPane.YES_OPTION){  //사용자가 yes를 눌렀을 경우
-                        //영화 삭제
+                        //영화 틀 삭제
                         Integer n = movieListController.deleteMovie(com1.getSelectedItem().toString());
+                        System.out.println(n);
                         if(n == 0) {
                             movieController.deleteMovie(com1.getSelectedItem().toString());
                             JOptionPane.showMessageDialog(null, "삭제 완료");
@@ -160,9 +163,11 @@ public class AdminMovie extends JFrame {
                 }
                 else if (com1.getSelectedItem().toString().isEmpty() || change2[0].getText().isEmpty() || change2[1].getText().isEmpty() ||
                         change2[2].getText().isEmpty() || change2[3].getText().isEmpty() ) {
+                    System.out.println(2);
                     JOptionPane.showMessageDialog(null, "존재하지 않음");
                 }
                 else {
+                    System.out.println(3);
                     Integer num = movieListController.find(com1.getSelectedItem().toString(), change2[0].getText(),
                             change2[2].getText(), change2[3].getText(), Integer.valueOf(change2[1].getText()));
                     if (num == 0) {
@@ -184,13 +189,18 @@ public class AdminMovie extends JFrame {
                     JOptionPane.showMessageDialog(null, "존재하지 않음");
                 } else {
                     if (num == 0) {
-                        JOptionPane.showMessageDialog(null, "존재하?");
+                        JOptionPane.showMessageDialog(null, "존재하지 않습니다.");
                     } else {
-                        movieListController.update(num, change2[0].getText(), change2[2].getText(),change2[3].getText()
-                        , Integer.valueOf(change2[1].getText()));
-                        JOptionPane.showMessageDialog(null, "변경되었습니다.");
-                        dispose();
-                        new AdminMovie();
+                        Integer check = movieListController.check(num);
+                        if(check == 0) {
+                            movieListController.update(num, change2[0].getText(), change2[2].getText(),change2[3].getText()
+                              , Integer.valueOf(change2[1].getText()));
+                             JOptionPane.showMessageDialog(null, "변경되었습니다.");
+                            dispose();
+                            new AdminMovie();
+                        }else{
+                            JOptionPane.showMessageDialog(null, "변경불가 : 예매중");
+                        }
                     }
                 }
             }

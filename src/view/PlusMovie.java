@@ -191,9 +191,13 @@ public class PlusMovie extends JFrame {
                 if(name.isEmpty() || theater.isEmpty() || date.isEmpty() || time.isEmpty() || room==null) {
                     JOptionPane.showMessageDialog(null, "모두 입력하시오.");
                 }else {
-                    movieListController.save(name,theater,date,time,room);
-                    JOptionPane.showMessageDialog(null, "추가 완료");
-                    dispose();
+                    Integer r = sHour + 2;
+                    String time2 = r + ":" + sMin + ":00";
+
+                    //Integer result = movieListController.checkAddMovie(theater,date,time,room);
+                        movieListController.save(name, theater, date, time, room);
+                        JOptionPane.showMessageDialog(null, "추가 완료");
+                        dispose();
                 }
             }
         });

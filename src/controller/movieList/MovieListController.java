@@ -4,6 +4,9 @@ import domain.MovieList;
 import dto.movie.MovieChange;
 import service.movieList.MovieListService;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class MovieListController {
@@ -64,5 +67,12 @@ public class MovieListController {
              return 0;
          }
          return 1;
+    }
+    public Integer check(Integer id){
+        return movieListService.checkBooking(id);
+    }
+    public Integer checkAddMovie(String theater, String date, String time, Integer room){
+
+        return 1;
     }
 }

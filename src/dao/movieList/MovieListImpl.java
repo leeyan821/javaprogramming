@@ -205,4 +205,53 @@ public class MovieListImpl implements MovieList{
         }
         return map;
     }
+
+    @Override
+    public Integer checkBooking(Integer id) {
+        Integer re = 0;
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select bookingNum from booking where movieListId = ?");
+            stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+
+            while(rs.next())
+                re = rs.getInt("bookingNum");
+        } catch (SQLException e) {
+            System.out.println("Find Num Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return re;
+    }
+
+    @Override
+    public Integer checkAddMovie(String theater, String date, String time, String time2, Integer room) {
+        Integer re = 0;
+        try {
+            conn = getConnect();
+            stmt = conn.prepareStatement("select movieListId from movielist where " +
+                    "theater = ? and date = ? and time >= ? and time <= ? and room = ?");
+
+            stmt.setString(1, theater);
+            stmt.setString(2, date);
+            stmt.setString(3, time);
+            stmt.setString(4, time2);
+            stmt.setInt(5, room);
+            rs = stmt.executeQuery();
+
+            while(rs.next())
+                re = rs.getInt("movieListId");
+        } catch (SQLException e) {
+            System.out.println("Find Num Error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rs,stmt,conn);
+        }
+        return re;
+    }
+
 }
