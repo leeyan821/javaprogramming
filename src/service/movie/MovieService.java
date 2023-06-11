@@ -78,4 +78,8 @@ public class MovieService {
     }
 
     public void deleteMovie(String name) {dao.deleteMovie(name);}
+
+    public String getUserBookingSeats(Object num) {
+        return dao.getUserBookingSeats(num);
+    }
 }

@@ -87,4 +87,8 @@ public class MovieController {
     public void deleteMovie(String name) {
         movieService.deleteMovie(name);
     }
+
+    public String getUserBookingSeats(Object num) {
+        return movieService.getUserBookingSeats(num);
+    }
 }
