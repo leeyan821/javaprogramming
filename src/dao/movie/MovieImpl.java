@@ -247,7 +247,8 @@ public class MovieImpl implements Movie {
         List<UserBookingList> re = new ArrayList<>();
         try {
             conn = getConnect();
-            stmt = conn.prepareStatement("select DISTINCT bookingNum, bookingDate, movieName from movie, booking, movielist where movie.movieNum = movielist.movieNum and userId = ?;");
+            stmt = conn.prepareStatement("select DISTINCT bookingNum, bookingDate, movieName from movie, booking, movielist where movie.movieNum = movielist.movieNum and " +
+                    "booking.movieListId = movielist.movieListId and userId = ?;");
             stmt.setString(1, userId);
 
             rs = stmt.executeQuery();
