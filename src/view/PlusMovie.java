@@ -202,7 +202,6 @@ public class PlusMovie extends JFrame {
                     else if(n == 0) {
                         JOptionPane.showMessageDialog(null, "존재하지 않는 영화입니다.");
                     }
-
                     //Integer result = movieListController.checkAddMovie(theater,date,time,room);
                        /* movieListController.save(name, theater, date, time, room);
                         JOptionPane.showMessageDialog(null, "추가 완료");
