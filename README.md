@@ -1,4 +1,5 @@
 # javaprogramming
+//영화 예매 시스템
 table
 
 CREATE TABLE `admin` (
@@ -25,17 +26,6 @@ CREATE TABLE `movielist` (
   PRIMARY KEY (`movieListId`),
   KEY `movieNum_idx` (`movieNum`),
   CONSTRAINT `movieNum` FOREIGN KEY (`movieNum`) REFERENCES `movie` (`movieNum`) ON UPDATE CASCADE
-);
-
-CREATE TABLE `seats` (
-  `seatId` int unsigned NOT NULL AUTO_INCREMENT,
-  `movieListId` int unsigned NOT NULL,
-  `row` varchar(5) NOT NULL,
-  `col` int unsigned NOT NULL,
-  `check` tinyint DEFAULT '0',
-  PRIMARY KEY (`seatId`),
-  KEY `movieListId_idx` (`movieListId`),
-  CONSTRAINT `movieListId` FOREIGN KEY (`movieListId`) REFERENCES `movielist` (`movieListId`)
 );
 
 CREATE TABLE `user` (
